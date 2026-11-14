@@ -1,0 +1,31 @@
+{
+  "schema": "embodiment-card/v1",
+  "id": "so100-follower-6dof",
+  "name": "SO-100 从臂",
+  "vendor": "TheRobotStudio / 社区",
+  "category": "arm",
+  "dof": 6,
+  "joints": [
+    { "name": "shoulder_pan", "min": -1.9, "max": 1.9, "unit": "rad" },
+    { "name": "shoulder_lift", "min": -1.7, "max": 1.7, "unit": "rad" },
+    { "name": "elbow_flex", "min": -1.7, "max": 1.7, "unit": "rad" },
+    { "name": "wrist_flex", "min": -1.9, "max": 1.9, "unit": "rad" },
+    { "name": "wrist_roll", "min": -3.0, "max": 3.0, "unit": "rad" },
+    { "name": "gripper", "min": -0.2, "max": 2.0, "unit": "rad" }
+  ],
+  "control": {
+    "rateHz": 60,
+    "interfaces": ["serial"],
+    "realtime": false
+  },
+  "capabilities": {
+    "teleop": { "level": "claimed", "evidence": "社区复现记录", "at": "2026-11-14" },
+    "pick_and_place": { "level": "none", "evidence": "无公开证据", "at": "2026-11-14" }
+  },
+  "provenance": {
+    "source": "社区开源硬件与装配文档（限位为近似值）",
+    "verifiedBy": "embodiment-card examples",
+    "verifiedAt": "2026-11-14",
+    "notes": "示例卡片：限位来自社区经验值，不是厂商标定值。"
+  }
+}

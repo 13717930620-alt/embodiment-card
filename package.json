@@ -1,0 +1,39 @@
+{
+  "name": "embodiment-card",
+  "version": "0.1.0",
+  "description": "机器人的机器可读说明书：一份 JSON 说清这台本体能做什么、证据到哪一步、谁验的。",
+  "type": "module",
+  "bin": {
+    "embodiment-card": "bin/ec.mjs",
+    "ec": "bin/ec.mjs"
+  },
+  "exports": {
+    ".": "./src/validate.mjs",
+    "./grade": "./src/grade.mjs",
+    "./render": "./src/render.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "schema",
+    "examples"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "check": "node bin/ec.mjs check examples/",
+    "site": "node bin/ec.mjs site examples/ -o site/"
+  },
+  "keywords": [
+    "robotics",
+    "embodied-ai",
+    "manifest",
+    "capability",
+    "provenance",
+    "json-schema",
+    "standard"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

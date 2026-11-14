@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: 单元测试
+        run: npm test
+      - name: 校验示例卡片
+        run: node bin/ec.mjs check examples/
+      - name: 生成卡片墙（回归：渲染不能崩）
+        run: node bin/ec.mjs site examples/ -o site/
+      - name: 确认没有新增运行时依赖
+        run: |
+          if [ -d node_modules ]; then
+            echo "::error::出现 node_modules，本项目应当零依赖"
+            exit 1
+          fi

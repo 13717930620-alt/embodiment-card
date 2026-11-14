@@ -1,0 +1,33 @@
+{
+  "schema": "embodiment-card/v1",
+  "id": "franka-panda-7dof",
+  "name": "Franka Emika Panda",
+  "vendor": "Franka Emika",
+  "category": "arm",
+  "dof": 7,
+  "joints": [
+    { "name": "panda_joint1", "min": -2.8973, "max": 2.8973, "unit": "rad", "velocityMax": 2.175 },
+    { "name": "panda_joint2", "min": -1.7628, "max": 1.7628, "unit": "rad", "velocityMax": 2.175 },
+    { "name": "panda_joint3", "min": -2.8973, "max": 2.8973, "unit": "rad", "velocityMax": 2.175 },
+    { "name": "panda_joint4", "min": -3.0718, "max": -0.0698, "unit": "rad", "velocityMax": 2.175 },
+    { "name": "panda_joint5", "min": -2.8973, "max": 2.8973, "unit": "rad", "velocityMax": 2.61 },
+    { "name": "panda_joint6", "min": -0.0175, "max": 3.7525, "unit": "rad", "velocityMax": 2.61 },
+    { "name": "panda_joint7", "min": -2.8973, "max": 2.8973, "unit": "rad", "velocityMax": 2.61 }
+  ],
+  "control": {
+    "rateHz": 1000,
+    "interfaces": ["fci", "ros2"],
+    "realtime": true
+  },
+  "capabilities": {
+    "pick_and_place": { "level": "claimed", "evidence": "厂商手册", "at": "2026-11-14" },
+    "force_control": { "level": "claimed", "evidence": "厂商手册（关节力矩传感器）", "at": "2026-11-14" },
+    "teleop": { "level": "claimed", "evidence": "厂商手册", "at": "2026-11-14" }
+  },
+  "provenance": {
+    "source": "厂商公开数据表（限位与速度来自 datasheet）",
+    "verifiedBy": "embodiment-card examples",
+    "verifiedAt": "2026-11-14",
+    "notes": "示例卡片：只做了结构转录，没有实测证据，因此停在 L1。"
+  }
+}

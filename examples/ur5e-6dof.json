@@ -1,0 +1,31 @@
+{
+  "schema": "embodiment-card/v1",
+  "id": "ur5e-6dof",
+  "name": "Universal Robots UR5e",
+  "vendor": "Universal Robots",
+  "category": "arm",
+  "dof": 6,
+  "joints": [
+    { "name": "shoulder_pan_joint", "min": -6.2832, "max": 6.2832, "unit": "rad", "velocityMax": 3.14 },
+    { "name": "shoulder_lift_joint", "min": -6.2832, "max": 6.2832, "unit": "rad", "velocityMax": 3.14 },
+    { "name": "elbow_joint", "min": -3.1416, "max": 3.1416, "unit": "rad", "velocityMax": 3.14 },
+    { "name": "wrist_1_joint", "min": -6.2832, "max": 6.2832, "unit": "rad", "velocityMax": 3.2 },
+    { "name": "wrist_2_joint", "min": -6.2832, "max": 6.2832, "unit": "rad", "velocityMax": 3.2 },
+    { "name": "wrist_3_joint", "min": -6.2832, "max": 6.2832, "unit": "rad", "velocityMax": 3.2 }
+  ],
+  "control": {
+    "rateHz": 500,
+    "interfaces": ["ros2", "sdk", "modbus"],
+    "realtime": true
+  },
+  "capabilities": {
+    "pick_and_place": { "level": "claimed", "evidence": "厂商手册", "at": "2026-11-14" },
+    "force_control": { "level": "claimed", "evidence": "厂商手册（内置力控）", "at": "2026-11-14" }
+  },
+  "provenance": {
+    "source": "厂商公开数据表",
+    "verifiedBy": "embodiment-card examples",
+    "verifiedAt": "2026-11-14",
+    "notes": "示例卡片：结构转录，无实测证据。"
+  }
+}

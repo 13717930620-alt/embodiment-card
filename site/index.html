@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Embodiment Card</title>
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#11141b; --line:#1e2430; --fg:#e6e9ef; --dim:#8b95a7;
+    --accent:#5eead4; --warn:#fbbf24; --bad:#f87171;
+    --l0:#64748b; --l1:#60a5fa; --l2:#34d399; --l3:#5eead4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#16202b 0%,var(--bg) 55%);
+       color:var(--fg);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:64px 24px 96px}
+  .eyebrow{font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;
+           text-transform:uppercase;color:var(--accent);margin:0 0 18px}
+  h1{font-size:clamp(30px,4.6vw,52px);line-height:1.12;margin:0 0 14px;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{color:var(--dim);font-size:17px;max-width:640px;margin:0 0 36px}
+  .stats{display:flex;gap:36px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:48px}
+  .stat b{display:block;font:600 26px/1.1 ui-monospace,Menlo,monospace}
+  .stat span{color:var(--dim);font-size:12.5px}
+  .stat.gap b{color:var(--warn)}
+  .ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 52px}
+  .rung{border:1px solid var(--line);border-radius:12px;padding:14px 14px 16px;background:var(--bg2)}
+  .rung b{display:block;font:600 13px/1 ui-monospace,Menlo,monospace;margin-bottom:6px}
+  .rung p{margin:0;color:var(--dim);font-size:12.5px}
+  .rung.on{border-color:#2b3444}
+  .rung.hot{border-color:rgba(94,234,212,.45);box-shadow:0 0 0 1px rgba(94,234,212,.12) inset}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .card{background:linear-gradient(180deg,#12161e,#0f131a);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px}
+  .card.fictional{border-style:dashed;opacity:.86}
+  .card.bad{border-color:#4b1d1d}
+  .card header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .card h3{margin:0 0 4px;font-size:16.5px;letter-spacing:-.01em}
+  .meta{margin:0;color:var(--dim);font-size:12.5px}
+  .grade{flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+         font:700 14px/1 ui-monospace,Menlo,monospace;background:#1a1f2a;border:1px solid #2a3242}
+  .g1{color:var(--l1);border-color:rgba(96,165,250,.35)}
+  .g2{color:var(--l2);border-color:rgba(52,211,153,.35)}
+  .g3{color:var(--l3);border-color:rgba(94,234,212,.45)}
+  .flag{margin:0;font:600 11.5px/1 ui-monospace,Menlo,monospace;color:var(--warn);letter-spacing:.06em}
+  .caps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .caps li{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
+  .cap{color:#c8cfdb}
+  .pill{font:600 10.5px/1 ui-monospace,Menlo,monospace;padding:4px 7px;border-radius:999px;letter-spacing:.04em}
+  .lv-none{background:#2a2020;color:#c98a8a}
+  .lv-claimed{background:#2a2620;color:#d8b26a}
+  .lv-measured{background:#16302a;color:#5ec9a8}
+  .lv-reproduced{background:#123330;color:var(--accent)}
+  .metric{color:var(--dim);font-size:12px}
+  .empty{color:var(--dim);font-size:13px}
+  .card footer{border-top:1px solid var(--line);padding-top:12px;margin-top:auto;color:var(--dim);font-size:12px;display:flex;gap:7px;flex-wrap:wrap}
+  .dot{opacity:.4}
+  .err{color:var(--bad);font-size:13px;margin:0}
+  .foot{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+  code{font:12.5px/1.5 ui-monospace,Menlo,monospace;background:#171c25;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:#c9d3e3}
+  @media(max-width:720px){.ladder{grid-template-columns:1fr 1fr}.stats{gap:22px}}
+</style>
+<div class="wrap">
+  <p class="eyebrow">embodiment-card / v1</p>
+  <h1>每台机器人，都该有一张<br><em>能被机器读懂的</em>能力卡</h1>
+  <p class="lede">URDF 告诉你它长什么样，这张卡告诉你它能干什么、证据到哪一步、谁验的。
+    一个 JSON、一个校验器、一条分级线：L0 结构 → L1 可控 → L2 有实测 → L3 可复现。</p>
+
+  <div class="stats">
+    <div class="stat"><b>4</b><span>张有效卡片</span></div>
+    <div class="stat"><b>7</b><span>条能力声明</span></div>
+    <div class="stat"><b>0</b><span>达到 L2</span></div>
+    <div class="stat gap"><b>0</b><span>达到 L3</span></div>
+  </div>
+
+  <div class="ladder">
+    <div class="rung on"><b>L0 结构</b><p>身份、类别、自由度、出处</p></div>
+    <div class="rung on"><b>L1 可控</b><p>+ 关节限位齐全、控制频率与接口</p></div>
+    <div class="rung"><b>L2 有实测</b><p>+ ≥3 项能力有实测证据，卡片带内容哈希</p></div>
+    <div class="rung hot"><b>L3 可复现</b><p>+ 至少一项被第三方复跑过</p></div>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <header>
+        <div>
+          <h3>Franka Emika Panda</h3>
+          <p class="meta">Franka Emika · arm · 7 DoF · 1000 Hz</p>
+        </div>
+        <span class="grade g1" title="L1 可控">L1</span>
+      </header>
+      
+      <ul class="caps">
+      <li>
+        <span class="cap">pick and place</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li>
+      <li>
+        <span class="cap">force control</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li>
+      <li>
+        <span class="cap">teleop</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li></ul>
+      <footer>
+        <span>L1 可控</span>
+        <span class="dot">·</span>
+        <span>证据分 36</span>
+        <span class="dot">·</span>
+        <span>embodiment-card examples</span>
+      </footer>
+    </article>
+    <article class="card">
+      <header>
+        <div>
+          <h3>SO-100 从臂</h3>
+          <p class="meta">TheRobotStudio / 社区 · arm · 6 DoF · 60 Hz</p>
+        </div>
+        <span class="grade g1" title="L1 可控">L1</span>
+      </header>
+      
+      <ul class="caps">
+      <li>
+        <span class="cap">teleop</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li>
+      <li>
+        <span class="cap">pick and place</span>
+        <span class="pill lv-none">无证据</span>
+        
+      </li></ul>
+      <footer>
+        <span>L1 可控</span>
+        <span class="dot">·</span>
+        <span>证据分 22</span>
+        <span class="dot">·</span>
+        <span>embodiment-card examples</span>
+      </footer>
+    </article>
+    <article class="card">
+      <header>
+        <div>
+          <h3>Universal Robots UR5e</h3>
+          <p class="meta">Universal Robots · arm · 6 DoF · 500 Hz</p>
+        </div>
+        <span class="grade g1" title="L1 可控">L1</span>
+      </header>
+      
+      <ul class="caps">
+      <li>
+        <span class="cap">pick and place</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li>
+      <li>
+        <span class="cap">force control</span>
+        <span class="pill lv-claimed">声称</span>
+        
+      </li></ul>
+      <footer>
+        <span>L1 可控</span>
+        <span class="dot">·</span>
+        <span>证据分 28</span>
+        <span class="dot">·</span>
+        <span>embodiment-card examples</span>
+      </footer>
+    </article>
+    <article class="card fictional">
+      <header>
+        <div>
+          <h3>虚构示例：一张 L3 卡片长什么样</h3>
+          <p class="meta">（虚构） · arm · 6 DoF · 1000 Hz</p>
+        </div>
+        <span class="grade g3" title="L3 可复现">L3</span>
+      </header>
+      <p class="flag">虚构示例 · 数据不可用</p>
+      <ul class="caps">
+      <li>
+        <span class="cap">pick and place</span>
+        <span class="pill lv-reproduced">可复现</span>
+        <span class="metric">成功率 0.94，碰撞率 0.01</span>
+      </li>
+      <li>
+        <span class="cap">force control</span>
+        <span class="pill lv-measured">实测</span>
+        <span class="metric">末端力跟踪误差 ≤ 0.8 N</span>
+      </li>
+      <li>
+        <span class="cap">teleop</span>
+        <span class="pill lv-measured">实测</span>
+        <span class="metric">端到端延迟 38 ms (p50)</span>
+      </li>
+      <li>
+        <span class="cap">handover</span>
+        <span class="pill lv-measured">实测</span>
+        <span class="metric">交接成功率 0.88</span>
+      </li></ul>
+      <footer>
+        <span>L3 可复现</span>
+        <span class="dot">·</span>
+        <span>证据分 60</span>
+        <span class="dot">·</span>
+        <span>embodiment-card examples</span>
+      </footer>
+    </article></div>
+
+  <p class="foot">
+    校验：<code>npx embodiment-card check examples/</code> ·
+    生成本页：<code>npx embodiment-card site examples/ -o site/</code><br>
+    所有真实卡片都停在 L1 —— 因为公开可查的实测证据几乎不存在。L3 那一格是空的，等谁先填。
+  </p>
+</div>
+</html>

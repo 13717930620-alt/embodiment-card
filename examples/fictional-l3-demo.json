@@ -1,0 +1,54 @@
+{
+  "schema": "embodiment-card/v1",
+  "id": "fictional-l3-demo",
+  "name": "虚构示例：一张 L3 卡片长什么样",
+  "vendor": "（虚构）",
+  "category": "arm",
+  "dof": 6,
+  "joints": [
+    { "name": "j1", "min": -2.9, "max": 2.9, "unit": "rad", "velocityMax": 2.0 },
+    { "name": "j2", "min": -1.8, "max": 1.8, "unit": "rad", "velocityMax": 2.0 },
+    { "name": "j3", "min": -2.9, "max": 2.9, "unit": "rad", "velocityMax": 2.0 },
+    { "name": "j4", "min": -3.0, "max": -0.1, "unit": "rad", "velocityMax": 2.0 },
+    { "name": "j5", "min": -2.9, "max": 2.9, "unit": "rad", "velocityMax": 2.6 },
+    { "name": "j6", "min": 0.0, "max": 3.7, "unit": "rad", "velocityMax": 2.6 }
+  ],
+  "control": {
+    "rateHz": 1000,
+    "interfaces": ["ethercat", "ros2"],
+    "realtime": true
+  },
+  "capabilities": {
+    "pick_and_place": {
+      "level": "reproduced",
+      "evidence": "第三方实验室按卡片复跑 200 次",
+      "metric": "成功率 0.94，碰撞率 0.01",
+      "at": "2026-10-30"
+    },
+    "force_control": {
+      "level": "measured",
+      "evidence": "本厂标定记录",
+      "metric": "末端力跟踪误差 ≤ 0.8 N",
+      "at": "2026-10-28"
+    },
+    "teleop": {
+      "level": "measured",
+      "evidence": "本厂标定记录",
+      "metric": "端到端延迟 38 ms (p50)",
+      "at": "2026-10-28"
+    },
+    "handover": {
+      "level": "measured",
+      "evidence": "本厂标定记录",
+      "metric": "交接成功率 0.88",
+      "at": "2026-10-29"
+    }
+  },
+  "provenance": {
+    "source": "（虚构）本卡片仅用于演示 L3 的字段形态",
+    "verifiedBy": "embodiment-card examples",
+    "verifiedAt": "2026-11-14",
+    "hash": "sha256:dcf8e38a24b478b4326fb3bf481f7a610f4c4c51d6f7965513f2b80a0da52e8e",
+    "notes": "虚构数据。机器人不存在，指标是编的，只用来展示一张满分卡片应该长什么样。"
+  }
+}

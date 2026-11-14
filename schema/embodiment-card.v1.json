@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://embodimentcard.dev/schema/v1.json",
+  "title": "Embodiment Card v1",
+  "description": "机器人的机器可读说明书：这台本体能做什么、证据到哪一步、谁验的。",
+  "type": "object",
+  "required": ["schema", "id", "name", "category", "dof", "joints", "control", "capabilities", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "embodiment-card/v1" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,47}$",
+      "description": "全局唯一短 id，小写 + 连字符。"
+    },
+    "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+    "vendor": { "type": "string", "maxLength": 80 },
+    "category": {
+      "enum": ["arm", "humanoid", "mobile", "quadruped", "hand", "other"]
+    },
+    "dof": { "type": "integer", "minimum": 1, "maximum": 128 },
+    "joints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "min", "max"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "min": { "type": "number" },
+          "max": { "type": "number" },
+          "unit": { "enum": ["rad", "deg", "m"] },
+          "velocityMax": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "required": ["rateHz", "interfaces"],
+      "additionalProperties": false,
+      "properties": {
+        "rateHz": { "type": "number", "exclusiveMinimum": 0 },
+        "interfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": ["ros2", "ros1", "fci", "modbus", "can", "ethercat", "serial", "sdk", "http", "grpc"]
+          }
+        },
+        "realtime": { "type": "boolean" }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "description": "键为能力名，值为证据等级 + 证据出处。等级：none < claimed < measured < reproduced。",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["level"],
+        "additionalProperties": false,
+        "properties": {
+          "level": { "enum": ["none", "claimed", "measured", "reproduced"] },
+          "evidence": { "type": "string", "maxLength": 200 },
+          "metric": { "type": "string", "maxLength": 120 },
+          "at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "verifiedBy", "verifiedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "maxLength": 200 },
+        "verifiedBy": { "type": "string", "maxLength": 80 },
+        "verifiedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "notes": { "type": "string", "maxLength": 400 }
+      }
+    }
+  }
+}
