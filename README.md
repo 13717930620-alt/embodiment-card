@@ -3,6 +3,7 @@
 **每台机器人，都该有一张能被机器读懂的能力卡。**
 
 [![schema](https://img.shields.io/badge/schema-v1-5eead4)](./schema/embodiment-card.v1.json)
+[![ci](https://github.com/13717930620-alt/embodiment-card/actions/workflows/ci.yml/badge.svg)](https://github.com/13717930620-alt/embodiment-card/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18-339933)](./package.json)
 [![deps](https://img.shields.io/badge/runtime%20deps-0-success)](./package.json)
