@@ -21,7 +21,7 @@ jobs:
       - name: 校验示例卡片
         run: node bin/ec.mjs check examples/
       - name: 生成卡片墙（回归：渲染不能崩）
-        run: node bin/ec.mjs site examples/ -o site/
+        run: node bin/ec.mjs site examples/ -o docs/
       - name: 确认没有新增运行时依赖
         run: |
           if [ -d node_modules ]; then

@@ -21,7 +21,7 @@
   "scripts": {
     "test": "node --test",
     "check": "node bin/ec.mjs check examples/",
-    "site": "node bin/ec.mjs site examples/ -o site/"
+    "site": "node bin/ec.mjs site examples/ -o docs/"
   },
   "keywords": [
     "robotics",

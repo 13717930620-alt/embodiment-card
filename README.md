@@ -103,7 +103,7 @@ Embodiment Card 把这些压成一份可校验、可 diff、可分级的结构�
 ```bash
 npx embodiment-card check examples/                 # 校验 + 评级
 npx embodiment-card check examples/ur5e-6dof.json   # 单张
-npx embodiment-card site  examples/ -o site/        # 生成静态卡片墙
+npx embodiment-card site  examples/ -o docs/        # 生成静态卡片墙
 npx embodiment-card init  my-robot                  # 打印最小骨架
 ```
 
@@ -126,11 +126,11 @@ console.log(grade(card).label); // "L1 可控"
 
 ## 卡片墙
 
-`site/index.html` 是渲染出来的静态页，纯 HTML + 内联 CSS，没有构建步骤、没有外部请求，可以直接丢到任何静态托管：
+`docs/index.html` 是渲染出来的静态页，纯 HTML + 内联 CSS，没有构建步骤、没有外部请求，可以直接丢到任何静态托管：
 
-![卡片墙](./site/preview.png)
+![卡片墙](./docs/preview.png)
 
-自己生成：`npx embodiment-card site examples/ -o site/`
+自己生成：`npx embodiment-card site examples/ -o docs/`
 
 ---
 

@@ -72,7 +72,7 @@ try {
     const dir = rest[0];
     if (!dir) { usage(); process.exit(2); }
     const oi = rest.indexOf('-o');
-    const out = oi > -1 ? rest[oi + 1] : join(process.cwd(), 'site');
+    const out = oi > -1 ? rest[oi + 1] : join(process.cwd(), 'docs');
     const items = loadDir(resolve(dir));
     const bad = items.filter((i) => !i.validate.ok).length;
     const p = writeSite(items, resolve(out));
