@@ -133,6 +133,8 @@ console.log(grade(card).label); // "L1 可控"
 
 自己生成：`npx embodiment-card site examples/ -o docs/`
 
+在线版：**https://13717930620-alt.github.io/embodiment-card/**
+
 ---
 
 ## 提交你的机器人
